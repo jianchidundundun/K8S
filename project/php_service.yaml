@@ -1,0 +1,41 @@
+
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: php-deployment
+  labels:
+    app: php
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: php
+  template:
+    metadata:
+      labels:
+        app: php
+    spec:
+      containers:
+      - name: php-container
+        image: a1chijian66666/cpservice:1.0
+        ports:
+          - containerPort: 80
+            protocol: TCP
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name:  php-service
+  labels:
+    app: php
+spec:
+  type: LoadBalancer
+  selector:
+    app:  php
+  ports:
+  - protocol: TCP
+    port:  80
+    targetPort:  80

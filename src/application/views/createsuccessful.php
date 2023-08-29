@@ -1,0 +1,1 @@
+<h1>You have created a new course</h1>

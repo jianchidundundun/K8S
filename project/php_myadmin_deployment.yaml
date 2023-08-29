@@ -1,0 +1,37 @@
+#reference from infs3208 lecture
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: phpmyadmin-deployment
+  labels:
+    app: phpmyadmin
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: phpmyadmin
+  template:
+    metadata:
+      labels:
+        app: phpmyadmin
+    spec:
+      containers:
+      - name: phpmyadmin-container
+        image: phpmyadmin
+        imagePullPolicy: IfNotPresent
+        ports:
+          - containerPort: 80
+            protocol: TCP
+        env:
+          - name: PMA_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: mysql-confimap
+                key: db_url
+          - name: PMA_PORTS
+            value: "3306"
+          - name: MYSQL_ROOT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: mysql-secret
+                key: mysql-root-pwd

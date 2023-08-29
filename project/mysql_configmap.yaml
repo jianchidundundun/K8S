@@ -1,0 +1,8 @@
+#reference from lecture slide
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql-confimap
+data:
+  db_url: mysql-service
+
